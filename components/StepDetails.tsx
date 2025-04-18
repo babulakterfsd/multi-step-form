@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { nextStep, updateField } from "@/lib/formSlice/formSlice";
-import { AppDispatch, RootState } from "@/lib/store";
+'use client';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { nextStep, updateField } from '@/lib/formSlice/formSlice';
+import { AppDispatch, RootState } from '@/lib/store';
 import {
   DefaultDetailsInfo,
   DetailsInfo,
   detailsSchema,
-} from "@/lib/validator/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import StepNavigation from "./StepNavigation";
-import { Button } from "./ui/button";
+} from '@/lib/validator/schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowRight } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import StepNavigation from './StepNavigation';
+import { Button } from './ui/button';
 import {
   Form,
   FormControl,
@@ -22,16 +22,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from './ui/form';
 export default function StepDetails() {
   const dispatch = useDispatch<AppDispatch>();
   const formData = useSelector((state: RootState) => state.form);
   const form = useForm({
-    mode: "all",
+    mode: 'all',
     resolver: zodResolver(detailsSchema),
     defaultValues: {
       ...DefaultDetailsInfo,
       ...formData,
+      jobSchedule: formData.jobSchedule as
+        | 'Morning shift'
+        | 'Nine-to-five'
+        | 'Day shift'
+        | 'Evening shift'
+        | 'Night shift',
     },
   });
   const onSubmit = (data: DetailsInfo) => {
@@ -137,7 +143,7 @@ export default function StepDetails() {
               <div className="flex flex-col space-y-1.5">
                 <FormField
                   control={form.control}
-                  name="jobShedule"
+                  name="jobSchedule"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Job Schedule</FormLabel>
@@ -145,11 +151,11 @@ export default function StepDetails() {
                         <div className="space-y-4">
                           <div className="flex flex-wrap gap-2">
                             {[
-                              "Nine-to-five",
-                              "Morning shift",
-                              "Day shift",
-                              "Evening shift",
-                              "Night shift",
+                              'Nine-to-five',
+                              'Morning shift',
+                              'Day shift',
+                              'Evening shift',
+                              'Night shift',
                             ].map((shift) => (
                               <button
                                 key={shift}
@@ -159,8 +165,8 @@ export default function StepDetails() {
                                 }}
                                 className={`inline-flex items-center border-2 rounded-full px-3 py-2 text-sm font-medium transition-colors ${
                                   field.value === shift
-                                    ? "bg-[#033146] text-white hover:bg-[#033146]"
-                                    : "text-gray-800 hover:bg-gray-200"
+                                    ? 'bg-[#033146] text-white hover:bg-[#033146]'
+                                    : 'text-gray-800 hover:bg-gray-200'
                                 }`}
                               >
                                 {shift}
