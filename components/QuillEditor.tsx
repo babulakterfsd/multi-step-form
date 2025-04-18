@@ -77,5 +77,5 @@ export default function QuillEditor({
     }
   }, [value]);
 
-  return <div ref={editorRef} className="h-[150px]" />;
+  return <div ref={editorRef} className="h-72" />;
 }

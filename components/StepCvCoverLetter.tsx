@@ -56,7 +56,7 @@ export default function StepCvCoverLetter() {
     const jobTitle = formData?.jobTitle || 'the position';
 
     const coverLetters = [
-      `Dear Hiring Manager,\n\nI am excited to apply for ${jobTitle} at your company. With my skills and experience, I believe I would be a great fit for your team.\n\nSincerely,\n${name}`,
+      `Dear Hiring Manager,\n\nI am excited to apply for ${jobTitle} developer role at your company. With my skills and experience, I believe I would be a great fit for your team.\n\nSincerely,\n${name}`,
       `To whom it may concern,\n\nI'm writing to express my interest in ${jobTitle}. My background aligns well with the requirements, and I'm eager to contribute to your organization.\n\nBest regards,\n${name}`,
       `Hello,\n\nI was thrilled to see the opening for ${jobTitle}. I'm confident that my qualifications make me a strong candidate for this role.\n\nRegards,\n${name}`,
       `Dear Recruiter,\n\nPlease accept my application for ${jobTitle}. I've attached my CV for your review and would welcome the opportunity to discuss how I can add value to your team.\n\nKind regards,\n${name}`,
@@ -140,7 +140,7 @@ export default function StepCvCoverLetter() {
                   )}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 mt-4 md:mt-8">
                 <FormField
                   control={form.control}
                   name="coverLetter"
@@ -186,8 +186,8 @@ export default function StepCvCoverLetter() {
               </div>
               <div className="flex justify-between space-y-1.5 mt-6 lg:mt-10">
                 <Button
-                  variant="outline"
-                  className="border-[#1DA6E5] text-[#1DA6E5] hover:bg-[#1DA6E5] hover:text-white"
+                  className="bg-white text-black border-none hover:text-black hover:bg-white shadow-none hover:shadow"
+                  type="button"
                   onClick={() => dispatch(prevStep())}
                 >
                   <ArrowLeft size={24} /> Previoius
