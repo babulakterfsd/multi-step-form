@@ -51,20 +51,31 @@ export default function StepCvCoverLetter() {
       form.setValue('cv', file, { shouldValidate: true });
     }
   };
-  const generateRandomCoverLetter = () => {
-    const name = formData?.name || 'Candidate';
-    const jobTitle = formData?.jobTitle || 'the position';
 
-    const coverLetters = [
-      `Dear Hiring Manager,\n\nI am excited to apply for ${jobTitle} developer role at your company. With my skills and experience, I believe I would be a great fit for your team.\n\nSincerely,\n${name}`,
-      `To whom it may concern,\n\nI'm writing to express my interest in ${jobTitle}. My background aligns well with the requirements, and I'm eager to contribute to your organization.\n\nBest regards,\n${name}`,
-      `Hello,\n\nI was thrilled to see the opening for ${jobTitle}. I'm confident that my qualifications make me a strong candidate for this role.\n\nRegards,\n${name}`,
-      `Dear Recruiter,\n\nPlease accept my application for ${jobTitle}. I've attached my CV for your review and would welcome the opportunity to discuss how I can add value to your team.\n\nKind regards,\n${name}`,
-    ];
+  const name = formData?.name || 'Candidate';
+  const jobTitle = formData?.jobTitle || 'the position';
 
-    const randomLetter =
-      coverLetters[Math.floor(Math.random() * coverLetters.length)];
-    form.setValue('coverLetter', randomLetter, { shouldValidate: true });
+  const infoForGeneratingCoverLetter = {
+    name,
+    jobTitle,
+  };
+
+  const callOpenAItoGenerateCoverLetter = async (info: any) => {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(info),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to generate cover letter');
+    }
+
+    const data = await response.json();
+    console.log('Generated cover letter:', data.coverLetter);
+    return data.coverLetter;
   };
 
   const onSubmit = (data: CvInfo) => {
@@ -155,18 +166,29 @@ export default function StepCvCoverLetter() {
                               'linear-gradient(90deg, #86088D 0%, #654FC6 80.77%)',
                           }}
                           type="button"
-                          onClick={() => {
-                            toast.promise(
-                              new Promise((resolve) => {
-                                generateRandomCoverLetter();
-                                resolve(null);
-                              }),
-                              {
-                                loading: 'Generating cover letter...',
-                                success: 'AI-generated cover letter added!',
-                                error: 'Failed to generate cover letter',
-                              }
-                            );
+                          onClick={async () => {
+                            try {
+                              toast.loading('Generating cover letter...');
+
+                              const aiLetter =
+                                await callOpenAItoGenerateCoverLetter(
+                                  infoForGeneratingCoverLetter
+                                );
+
+                              console.log('aiLetter', aiLetter);
+
+                              form.setValue('coverLetter', aiLetter, {
+                                shouldValidate: true,
+                              });
+                              toast.success('AI-generated cover letter added!');
+                              toast.dismiss();
+                            } catch (err) {
+                              console.error(err);
+                              toast.error(
+                                'Failed to generate cover letter. API quota exceeded.'
+                              );
+                              toast.dismiss();
+                            }
                           }}
                         >
                           <WandSparkles className="mr-2 h-4 w-4" /> AI Write
