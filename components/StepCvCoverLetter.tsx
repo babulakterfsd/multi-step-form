@@ -4,7 +4,7 @@
 'use client';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { prevStep, updateField } from '@/lib/formSlice/formSlice';
+import { prevStep, resetForm, updateField } from '@/lib/formSlice/formSlice';
 import { AppDispatch, RootState } from '@/lib/store';
 import { CvInfo, cvSchema, DefaultCvInfo } from '@/lib/validator/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -87,9 +87,9 @@ export default function StepCvCoverLetter() {
       description: 'Congratulations, your job application done. ',
     });
     // reset the form after submission local state
-    // form.reset();
+    form.reset();
     // reset the form after submission redux store
-    // dispatch(resetForm());
+    dispatch(resetForm());
   };
 
   return (

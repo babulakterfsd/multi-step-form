@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { DetailsInfo } from '../validator/schema';
 
 interface FormState {
   step: number;
@@ -7,23 +8,23 @@ interface FormState {
   email: string;
   phone: string;
   jobTitle: string;
-  jobSchedule: string;
+  jobSchedule: DetailsInfo['jobSchedule'];
   cv: File | null;
   coverLetter: string;
 }
 const initialState: FormState = {
   step: 1,
-  name: "",
-  email: "",
-  phone: "",
-  jobTitle: "",
-  jobSchedule: "",
+  name: '',
+  email: '',
+  phone: '',
+  jobTitle: '',
+  jobSchedule: 'Morning shift',
   cv: null,
-  coverLetter: "",
+  coverLetter: '',
 };
 
 const formSlice = createSlice({
-  name: "form",
+  name: 'form',
   initialState,
   reducers: {
     updateField: (

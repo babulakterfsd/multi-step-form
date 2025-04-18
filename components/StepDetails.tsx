@@ -32,12 +32,6 @@ export default function StepDetails() {
     defaultValues: {
       ...DefaultDetailsInfo,
       ...formData,
-      jobSchedule: formData.jobSchedule as
-        | 'Morning shift'
-        | 'Nine-to-five'
-        | 'Day shift'
-        | 'Evening shift'
-        | 'Night shift',
     },
   });
   const onSubmit = (data: DetailsInfo) => {
@@ -66,7 +60,7 @@ export default function StepDetails() {
                       <FormControl>
                         <Input
                           type="text"
-                          placeholder="e.g. Robert Smith"
+                          placeholder="e.g. Jhon Doe"
                           {...field}
                         />
                       </FormControl>

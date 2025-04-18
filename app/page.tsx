@@ -1,4 +1,4 @@
-import JobFormWrapper from "@/components/JobFormWrapper";
+import JobFormWrapper from '@/components/JobFormWrapper';
 
 export default function Home() {
   return (
