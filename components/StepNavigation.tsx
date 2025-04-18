@@ -20,7 +20,7 @@ const StepNavigation = () => {
                 {label}
               </span>
               {isActive && (
-                <span className="absolute bottom-0 left-0 w-full h-[3px] bg-blue-500"></span>
+                <span className="absolute bottom-0 left-0 w-full h-[3px] bg-[#1DA6E5]"></span>
               )}
             </div>
           );

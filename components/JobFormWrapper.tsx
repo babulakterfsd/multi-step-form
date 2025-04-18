@@ -10,10 +10,10 @@ const JobFormWrapper = () => {
 
   return (
     <Fragment>
-      <div className="w-[675px]">
+      <div className="flex items-center justify-between w-full max-w-2xl mx-auto">
         <h1 className="text-xl font-semibold">Job Apply</h1>
       </div>
-      <div className="mt-6">
+      <div className="mt-5 w-full max-w-2xl mx-auto">
         {step === 1 && <StepDetails />}
         {step === 2 && <StepCvCoverLetter />}
       </div>

@@ -42,7 +42,7 @@ export default function StepDetails() {
     dispatch(nextStep());
   };
   return (
-    <Card className="w-[675px] p-[32px]">
+    <Card className="w-full p-8 bg-white shadow-md rounded-lg">
       <CardHeader className="p-0 space-y-0">
         <StepNavigation />
       </CardHeader>
@@ -174,7 +174,7 @@ export default function StepDetails() {
                   )}
                 />
               </div>
-              <div className="flex justify-end space-y-1.5">
+              <div className="flex justify-end space-y-1.5 mt-6 lg:mt-10">
                 <Button className="bg-[#1DA6E5]" type="submit">
                   Next: CV & Cover letter <ArrowRight size={24} />
                 </Button>

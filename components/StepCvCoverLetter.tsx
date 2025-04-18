@@ -93,7 +93,7 @@ export default function StepCvCoverLetter() {
   };
 
   return (
-    <Card className="w-[675px] p-[32px]">
+    <Card className="w-full p-8 bg-white shadow-md rounded-lg">
       <CardHeader className="p-0 space-y-0">
         <StepNavigation />
       </CardHeader>
@@ -184,7 +184,7 @@ export default function StepCvCoverLetter() {
                   )}
                 />
               </div>
-              <div className="flex justify-between space-y-1.5">
+              <div className="flex justify-between space-y-1.5 mt-6 lg:mt-10">
                 <Button
                   variant="outline"
                   className="border-[#1DA6E5] text-[#1DA6E5] hover:bg-[#1DA6E5] hover:text-white"

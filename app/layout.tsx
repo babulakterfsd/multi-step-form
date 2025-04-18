@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${inter.variable}`}>
         <StoreProvider>
           {children}
-          <Toaster position="top-right" richColors closeButton />
+          <Toaster position="top-right" richColors />
         </StoreProvider>
       </body>
     </html>
