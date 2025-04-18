@@ -170,6 +170,10 @@ export default function StepCvCoverLetter() {
                             try {
                               toast.loading('Generating cover letter...');
 
+                              setTimeout(() => {
+                                toast.dismiss();
+                              }, 3000);
+
                               const aiLetter =
                                 await callOpenAItoGenerateCoverLetter(
                                   infoForGeneratingCoverLetter
@@ -181,13 +185,11 @@ export default function StepCvCoverLetter() {
                                 shouldValidate: true,
                               });
                               toast.success('AI-generated cover letter added!');
-                              toast.dismiss();
                             } catch (err) {
                               console.error(err);
                               toast.error(
                                 'Failed to generate cover letter. API quota exceeded.'
                               );
-                              toast.dismiss();
                             }
                           }}
                         >
