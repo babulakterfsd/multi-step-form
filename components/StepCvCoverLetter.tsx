@@ -60,7 +60,8 @@ export default function StepCvCoverLetter() {
     jobTitle,
   };
 
-  const callOpenAItoGenerateCoverLetter = async (info: any) => {
+  // call gemini api to generate cover letter
+  const callGeminiToGenerateCoverLetter = async (info: any) => {
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: {
@@ -74,7 +75,6 @@ export default function StepCvCoverLetter() {
     }
 
     const data = await response.json();
-    console.log('Generated cover letter:', data.coverLetter);
     return data.coverLetter;
   };
 
@@ -175,11 +175,9 @@ export default function StepCvCoverLetter() {
                               }, 3000);
 
                               const aiLetter =
-                                await callOpenAItoGenerateCoverLetter(
+                                await callGeminiToGenerateCoverLetter(
                                   infoForGeneratingCoverLetter
                                 );
-
-                              console.log('aiLetter', aiLetter);
 
                               form.setValue('coverLetter', aiLetter, {
                                 shouldValidate: true,
@@ -187,9 +185,7 @@ export default function StepCvCoverLetter() {
                               toast.success('AI-generated cover letter added!');
                             } catch (err) {
                               console.error(err);
-                              toast.error(
-                                'Failed to generate cover letter. API quota exceeded.'
-                              );
+                              toast.error('Failed to generate cover letter.');
                             }
                           }}
                         >

@@ -1,38 +1,28 @@
+import { GoogleGenAI } from '@google/genai';
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-});
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
+  const { name, jobTitle } = await request.json();
+
+  if (!name || !jobTitle) {
+    return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
+  }
+
+  const prompt = `Write a professional cover letter for someone named ${name}, applying for the position of ${jobTitle} role. Make it concise and enthusiastic.`;
+
   try {
-    const { name, jobTitle } = await req.json();
-
-    const prompt = `Write a professional and personalized cover letter for someone named ${name} applying for a ${jobTitle} role. Keep it warm, confident, and relevant to a modern tech company.`;
-
-    const response = await openai.chat.completions.create({
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-      model: 'gpt-3.5-turbo',
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.0-flash',
+      contents: prompt,
     });
 
-    console.log('[OPENAI_RESPONSE]', response);
-
-    const coverLetter = response.choices[0]?.message?.content;
-
-    return NextResponse.json({ coverLetter });
+    return NextResponse.json({ coverLetter: response?.text }, { status: 200 });
   } catch (error) {
-    console.error('[OPENAI_ERROR]', error);
+    console.error('Gemini API Error:', error);
     return NextResponse.json(
-      {
-        error:
-          'Something went wrong while generating cover letter. API quota exceeded',
-      },
+      { error: 'Failed to generate cover letter' },
       { status: 500 }
     );
   }
