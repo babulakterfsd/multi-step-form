@@ -3,12 +3,21 @@
 
 'use client';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import {
+  FileUpload,
+  FileUploadDropzone,
+  FileUploadItem,
+  FileUploadItemDelete,
+  FileUploadItemMetadata,
+  FileUploadItemPreview,
+  FileUploadList,
+  FileUploadTrigger,
+} from '@/components/ui/file-upload';
 import { prevStep, resetForm, updateField } from '@/lib/formSlice/formSlice';
 import { AppDispatch, RootState } from '@/lib/store';
 import { CvInfo, cvSchema, DefaultCvInfo } from '@/lib/validator/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight, WandSparkles } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Upload, WandSparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +33,6 @@ import {
   FormLabel,
   FormMessage,
 } from './ui/form';
-import { Label } from './ui/label';
 
 export default function StepCvCoverLetter() {
   const formData = useSelector((state: RootState) => state.form);
@@ -136,15 +144,68 @@ export default function StepCvCoverLetter() {
                     <FormItem>
                       <FormLabel>CV</FormLabel>
                       <FormControl>
-                        <Label className="text-black py-3 bg-white border-2 rounded-md cursor-pointer transition-all duration-200 ease-in-out flex items-center justify-center text-center">
-                          Upload new CV (PDF only)
-                          <Input
-                            type="file"
-                            accept=".pdf"
-                            onChange={handleFileChange}
-                            className="hidden"
-                          />
-                        </Label>
+                        <FileUpload
+                          maxFiles={1}
+                          maxSize={5 * 1024 * 1024}
+                          accept="application/pdf"
+                          className="w-full"
+                          value={field.value ? [field.value] : []}
+                          onValueChange={(files: File[]) => {
+                            field.onChange(files[0]);
+                          }}
+                          onFileReject={(file, message) => {
+                            toast(message, {
+                              description: `"${
+                                file.name.length > 20
+                                  ? `${file.name.slice(0, 20)}...`
+                                  : file.name
+                              }" has been rejected`,
+                            });
+                          }}
+                          multiple={false}
+                        >
+                          <FileUploadDropzone>
+                            <div className="flex flex-col items-center gap-1">
+                              <div className="flex items-center justify-center rounded-full border p-2.5">
+                                <Upload className="size-6 text-muted-foreground" />
+                              </div>
+                              <p className="font-medium text-sm">
+                                Drag & drop your CV here
+                              </p>
+                              <p className="text-muted-foreground text-xs">
+                                Only PDF, max 5MB
+                              </p>
+                            </div>
+                            <FileUploadTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="mt-2 w-fit"
+                              >
+                                Browse CV
+                              </Button>
+                            </FileUploadTrigger>
+                          </FileUploadDropzone>
+
+                          <FileUploadList>
+                            {field.value && (
+                              <FileUploadItem value={field.value}>
+                                <FileUploadItemPreview />
+                                <FileUploadItemMetadata />
+                                <FileUploadItemDelete asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="size-7"
+                                    onClick={() => field.onChange(undefined)}
+                                  >
+                                    <X />
+                                  </Button>
+                                </FileUploadItemDelete>
+                              </FileUploadItem>
+                            )}
+                          </FileUploadList>
+                        </FileUpload>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
