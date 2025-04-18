@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
+'use client';
 
-import type Quill from "quill";
-import "quill/dist/quill.snow.css";
-import { useEffect, useRef } from "react";
+import type Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+import { useEffect, useRef } from 'react';
 
 interface QuillEditorProps {
   value: string;
@@ -23,29 +23,29 @@ export default function QuillEditor({
   useEffect(() => {
     if (editorRef.current && !quillRef.current && !isMounted.current) {
       isMounted.current = true;
-      import("quill").then((QuillModule) => {
+      import('quill').then((QuillModule) => {
         const Quill = QuillModule.default;
 
         if (editorRef.current) {
-          editorRef.current.innerHTML = "";
+          editorRef.current.innerHTML = '';
         }
 
-        const container = document.createElement("div");
+        const container = document.createElement('div');
         editorRef.current?.appendChild(container);
 
         quillRef.current = new Quill(container, {
           modules: {
             toolbar: [
-              ["bold", "italic", "underline"],
-              [{ list: "ordered" }, { list: "bullet" }],
+              ['bold', 'italic', 'underline'],
+              [{ list: 'ordered' }, { list: 'bullet' }],
             ],
           },
-          theme: "snow",
-          placeholder: placeholder || "Write something...",
+          theme: 'snow',
+          placeholder: placeholder || 'Write something...',
         });
 
         // Handle text change
-        quillRef.current.on("text-change", () => {
+        quillRef.current.on('text-change', () => {
           if (quillRef.current) {
             onChange(quillRef.current.root.innerHTML);
           }
@@ -60,10 +60,10 @@ export default function QuillEditor({
 
     return () => {
       if (quillRef.current) {
-        quillRef.current.off("text-change");
+        quillRef.current.off('text-change');
         const editorElement = editorRef.current;
         if (editorElement) {
-          editorElement.innerHTML = "";
+          editorElement.innerHTML = '';
         }
         quillRef.current = null;
       }
@@ -73,7 +73,7 @@ export default function QuillEditor({
 
   useEffect(() => {
     if (quillRef.current && quillRef.current.root.innerHTML !== value) {
-      quillRef.current.root.innerHTML = value || "";
+      quillRef.current.root.innerHTML = value || '';
     }
   }, [value]);
 

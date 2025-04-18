@@ -1,9 +1,9 @@
-"use client";
-import { RootState } from "@/lib/store";
-import { Fragment } from "react";
-import { useSelector } from "react-redux";
-import StepCvCoverLetter from "./StepCvCoverLetter";
-import StepDetails from "./StepDetails";
+'use client';
+import { RootState } from '@/lib/store';
+import { Fragment } from 'react';
+import { useSelector } from 'react-redux';
+import StepCvCoverLetter from './StepCvCoverLetter';
+import StepDetails from './StepDetails';
 
 const JobFormWrapper = () => {
   const step = useSelector((state: RootState) => state.form.step);
