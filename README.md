@@ -15,6 +15,8 @@
 
 - First, clone the repo and install the dependencies using `npm install` command.
 - then, build the project using `npm run build` command.
+- add .env.local file in the root directory and add the following environment variables:
+  - `GEMINI_API_KEY` = `your api key provided by gemini`
 - at last, run the project using `npm run dev` command.
 - open your browser and go to `http://localhost:3000`.
 - fill the form and submit it.
